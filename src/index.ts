@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import config from "config";
 import connect from "./utils/connect";
+import logger from "./utils/logger"
 
 const port = config.get<number>("port");
 
@@ -11,6 +12,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.listen(port, async () => {
-  console.log("Server running on port 5000");
+  logger.info(`Server is up and running at http://localhost:${port}`);
   await connect();
 });
