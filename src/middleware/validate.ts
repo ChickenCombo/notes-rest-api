@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AnyZodObject } from "zod";
+import logger from "../utils/logger";
 
 const validate =
   (schema: AnyZodObject) =>
@@ -12,8 +13,11 @@ const validate =
       });
 
       next();
-    } catch (error) {
-      return res.status(400).send(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        logger.error(error.message);
+        return res.status(400).send(error.message);
+      }
     }
   };
 
