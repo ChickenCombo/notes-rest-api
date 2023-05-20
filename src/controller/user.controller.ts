@@ -11,6 +11,8 @@ export const createUserHandler = async (
   try {
     const user = await createUser(req.body);
 
+    logger.info(`User created: ${user?._id}`);
+
     return res.send(omit(user?.toJSON(), "password"));
   } catch (error: unknown) {
     if (error instanceof Error) {
